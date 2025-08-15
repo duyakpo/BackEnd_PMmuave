@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float
 from infrastructure.databases.base import Base
 class SponsorModel(Base):
     __tablename__ = "sponsors"
