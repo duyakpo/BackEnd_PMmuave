@@ -2,13 +2,10 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from infrastructure.databases.base import Base
 
 class UserModel(Base):
-    __tablename__ = 'flask_user'
-    # __table_args__ = {'extend_existing': True}  # Thêm dòng này
-
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True)
-    user_name = Column(String(18), nullable=False)
-    password = Column(String(18), nullable=False)
-    description = Column(String(255), nullable=True)
-    status = Column(Boolean, nullable=False)
-    created_at = Column(DateTime)
-    updated_at = Column(DateTime) 
+    full_name = Column(String(255), nullable=False)
+    email = Column(String(255), nullable=False, unique=True)
+    phone = Column(String(20))
+    password = Column(String(255), nullable=False)
+    role = Column(String(50), nullable=False)
