@@ -1,12 +1,8 @@
-import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float
 from infrastructure.databases.base import Base
-
-class Invoice(Base):
+class InvoiceModel(Base):
     __tablename__ = "invoices"
-
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    date = Column(DateTime, default=datetime.datetime.utcnow)
-    total = Column(Float, default=0.0)
-
+    customer_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    created_at = Column(DateTime, nullable=False)
+    total_amount = Column(Float, nullable=False)
