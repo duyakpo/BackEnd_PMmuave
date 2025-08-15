@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
-from sqlalchemy.orm import relationship
-from .invoice import Base
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
+from infrastructure.databases.base import Base
 
 class InvoiceLine(Base):
     __tablename__ = 'invoice_lines'
@@ -11,4 +10,3 @@ class InvoiceLine(Base):
     quantity = Column(Integer)
     price = Column(Float)
     
-    invoice = relationship("Invoice", back_populates="lines")
