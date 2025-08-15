@@ -1,11 +1,10 @@
-from sqlalchemy import Column, Integer, String, Datatime, ForeignKey
-from sqlalchemy.orm import relationship
-from database import Base
-
-class SurveyResponse(Base):
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
+from infrastructure.databases.base import Base
+class SurveyResponseModel(Base):
     __tablename__ = "survey_responses"
-    id = Column(Integer, primary_key=True, index=True)
-    answer = Column(String, nullable=False)
+    id = Column(Integer, primary_key=True)
     survey_id = Column(Integer, ForeignKey("surveys.id"), nullable=False)
-    survey = relationship("Survey", back_populates="responses")
+    respondent_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    content = Column(Text)
+    rating = Column(Integer)
    
