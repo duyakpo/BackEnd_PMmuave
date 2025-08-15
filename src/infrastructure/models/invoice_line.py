@@ -1,12 +1,10 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float
 from infrastructure.databases.base import Base
-
-class InvoiceLine(Base):
-    __tablename__ = 'invoice_lines'
-    
+class InvoiceLineModel(Base):
+    __tablename__ = "invoice_lines"
     id = Column(Integer, primary_key=True)
-    invoice_id = Column(Integer, ForeignKey('invoices.id'))
-    product_name = Column(String(100))
-    quantity = Column(Integer)
-    price = Column(Float)
+    invoice_id = Column(Integer, ForeignKey("invoices.id"), nullable=False)
+    ticket_id = Column(Integer, ForeignKey("tickets.id"), nullable=False)
+    quantity = Column(Integer, nullable=False)
+    amount = Column(Float, nullable=False)
     
