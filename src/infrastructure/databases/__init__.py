@@ -1,5 +1,5 @@
 from infrastructure.databases.mssql import init_mssql
-from infrastructure.models import course_register_model, todo_model, user_model, course_model, consultant_model, appointment_model
+from infrastructure.models import todo_model, user, event, survey, sponor, sponor_event, ticket, survey_response, ticket_type, invoice, invoice_line
 
 def init_db(app):
     init_mssql(app)
