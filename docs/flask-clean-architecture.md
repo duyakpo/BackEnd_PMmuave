@@ -3,7 +3,11 @@
 ```bash
     ├── migrations
     ├── scripts
+<<<<<<< HEAD
     │   └── run_postgres.sh`
+=======
+    │   └── run_postgres.sh
+>>>>>>> 76b11cf79d76e4d4a56d8a8e010d0ba49af93f46
     ├── src
     │   ├── api
     │   │   ├── controllers
