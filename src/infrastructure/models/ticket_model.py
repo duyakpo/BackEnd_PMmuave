@@ -1,11 +1,15 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
-from infrastructure.databases.base import Base
+from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+from . import Base
 
-class TicketModel(Base):
+class Ticket(Base):
     __tablename__ = "tickets"
-    id = Column(Integer, primary_key=True)
-    ticket_type_id = Column(Integer, ForeignKey("ticket_types.id"), nullable=False)
-    event_id = Column(Integer, ForeignKey("events.id"), nullable=False)
-    buyer_id = Column(Integer, ForeignKey("accounts.id"), nullable=False)
-    status = Column(String(50), nullable=False)
-    qr_code = Column(String(255))
+
+    ticket_id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.user_id"))
+    event_id = Column(Integer, ForeignKey("events.event_id"))
+    ticket_type_id = Column(Integer, ForeignKey("ticket_types.ticket_type_id"))
+
+    user = relationship("User")
+    event = relationship("Event", back_populates="tickets")
+    ticket_type = relationship("TicketType")
