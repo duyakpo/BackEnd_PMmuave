@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # src/infrastructure/databases/mssql.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -38,3 +39,17 @@ def get_db():
         yield db
     finally:
         db.close()
+=======
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from config import Config
+from infrastructure.databases.base import Base
+
+# Database configuration
+DATABASE_URL = Config.DATABASE_URI
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+session = SessionLocal()
+def init_mssql(app):
+    Base.metadata.create_all(bind=engine)
+>>>>>>> dfa820c (initial commit: add backend code)
