@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+﻿Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+SQLAlchemy==2.0.20
+pydantic==2.6.0
+python-dotenv==1.0.0
+=======
 Flask>=2.0
 Flask-Cors>=3.0
 Flask-SQLAlchemy>=2.5
@@ -11,3 +18,4 @@ fastapi
 apispec
 apispec_webframeworks
 flask-swagger-ui
+>>>>>>> origin/main
