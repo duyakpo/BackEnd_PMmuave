@@ -1,0 +1,18 @@
+from flask import Blueprint, jsonify, request
+
+# Khßi t¡o Blueprint
+ticketing_bp = Blueprint('ticketing_bp', __name__)
+
+# Route test
+@ticketing_bp.route('/hello', methods=['GET'])
+def hello():
+    return jsonify({'message': 'Hello World from Ticketing API!'})
+
+# Ví då route t¡o order
+@ticketing_bp.route('/orders', methods=['POST'])
+def create_order():
+    data = request.get_json()
+    return jsonify({
+        'status': 'success',
+        'order_data': data
+    })

@@ -1,0 +1,29 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
+
+# Khßi t¡o các extension tr°Ûc, bind vào app sau
+db = SQLAlchemy()
+migrate = Migrate()
+jwt = JWTManager()
+
+def create_app():
+    app = Flask(__name__)
+
+    # C¥u hình c¡ b£n
+    app.config['SECRET_KEY'] = 'your_secret_key_here'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketing.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_here'
+
+    # G¯n extension vào app
+    db.init_app(app)
+    migrate.init_app(app, db)
+    jwt.init_app(app)
+
+    # Import và ng ký blueprint
+    from .routes import ticketing_bp
+    app.register_blueprint(ticketing_bp, url_prefix='/api')
+
+    return app
