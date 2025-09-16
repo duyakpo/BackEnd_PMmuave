@@ -1,0 +1,13 @@
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy.orm import relationship
+from . import Base
+
+class Event(Base):
+    __tablename__ = "events"
+
+    event_id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    date = Column(Date, nullable=False)
+    location = Column(String)
+
+    tickets = relationship("Ticket", back_populates="event")
