@@ -1,5 +1,5 @@
 # run.py
-from ticketing_app import create_app, db
+from ticketing_app import create_app, db # pyright: ignore[reportMissingImports]
 
 app = create_app()
 
