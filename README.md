@@ -109,7 +109,7 @@ Object Relational Mapping
 Ánh xạ 1 class (OOP)  model src/infrastructure/models --> Table in database 
 Ánh xạ các mối quan hệ (Relational) -- Khoá ngoại CSDL 
 (n-n): many to many 
-=======
+
 # BackEnd_PMmuave
 Flask-Api
->>>>>>> 1096bf9e6a120948d5ae434be1290aa6a9f8ea49
+1096bf9e6a120948d5ae434be1290aa6a9f8ea49
