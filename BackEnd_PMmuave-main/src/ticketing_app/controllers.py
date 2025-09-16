@@ -1,0 +1,68 @@
+import base64
+import qrcode
+from io import BytesIO
+from flask import jsonify
+from src.database import db_session
+from .models import HoaDon, DongHoaDon, Ve
+
+
+def generate_qr_code(data: str) -> str:
+    """Sinh mã QR và tr£ vÁ base64 string"""
+    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    return base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+
+def create_order(user_id, tickets_data):
+    """Xí lý logic ·t vé & t¡o hóa ¡n"""
+    hoa_don = HoaDon(user_id=user_id, total_amount=0.0)
+    db_session.add(hoa_don)
+    db_session.flush()  # Ã l¥y hoa_don.id ngay mà ch°a c§n commit
+
+    dong_list = []
+    ve_list = []
+    total_amount = 0.0
+
+    for ticket in tickets_data:
+        ve = Ve(
+            event_name=ticket["event_name"],
+            qr_code=generate_qr_code(ticket["event_name"])
+        )
+        db_session.add(ve)
+        db_session.flush()
+
+        dong = DongHoaDon(
+            hoa_don_id=hoa_don.id,
+            ve_id=ve.id,
+            so_luong=ticket.get("so_luong", 1),
+            don_gia=ticket.get("don_gia", 100.0)  # gi£ sí giá default 100
+        )
+
+        total_amount += dong.so_luong * dong.don_gia
+        dong_list.append(dong)
+        ve_list.append(ve)
+
+    hoa_don.total_amount = total_amount
+    db_session.add_all(dong_list)
+    db_session.commit()
+
+    return {"message": "·t vé thành công", "hoa_don_id": hoa_don.id, "tong_tien": total_amount}
+
+
+def get_user_tickets(user_id):
+    """Tr£ vÁ danh sách vé cça user"""
+    tickets = db_session.query(Ve).join(DongHoaDon).join(HoaDon).filter(HoaDon.user_id == user_id).all()
+    return [{"id": v.id, "event": v.event_name, "qr_code": v.qr_code} for v in tickets]
+
+
+def get_ticket_detail(ticket_id):
+    """Chi ti¿t vé"""
+    ve = db_session.query(Ve).filter_by(id=ticket_id).first()
+    if not ve:
+        return {"error": "Không tìm th¥y vé"}, 404
+    return {"id": ve.id, "event": ve.event_name, "qr_code": ve.qr_code}
